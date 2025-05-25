@@ -22,6 +22,9 @@
                             <x-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
                                 {{ __('Gestión de Tesis') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                            {{ __('Usuarios') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
@@ -72,6 +75,9 @@
                 @if(Auth::user()->role === 'admin')
                     <x-responsive-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
                         {{ __('Gestión de Tesis') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                    {{ __('Usuarios') }}
                     </x-responsive-nav-link>
                 @endif
             @endauth
