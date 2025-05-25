@@ -17,12 +17,55 @@
                         </div>
                     @endif
 
+                    {{-- Formulario de Búsqueda y Filtros --}}
+                    <form method="GET" action="{{ route('tesis.index') }}" class="mb-6 flex flex-wrap items-end space-y-4 sm:space-y-0 sm:space-x-4">
+                        <div class="flex-grow">
+                            <x-input-label for="search" :value="__('Buscar')" />
+                            <x-text-input id="search" class="block mt-1 w-full" type="text" name="search" placeholder="Título, autor, palabras clave..." :value="request('search')" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="carrera_id" :value="__('Filtrar por Carrera')" />
+                            <select id="carrera_id" name="carrera_id" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="">Todas las Carreras</option>
+                                @foreach($carreras as $carrera)
+                                    <option value="{{ $carrera->id_carrera }}" {{ request('carrera_id') == $carrera->id_carrera ? 'selected' : '' }}>
+                                        {{ $carrera->nombre }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <x-input-label for="año_publicacion" :value="__('Filtrar por Año')" />
+                            <select id="año_publicacion" name="año_publicacion" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <option value="">Todos los Años</option>
+                                @for ($year = date('Y'); $year >= 1900; $year--)
+                                    <option value="{{ $year }}" {{ request('año_publicacion') == $year ? 'selected' : '' }}>
+                                        {{ $year }}
+                                    </option>
+                                @endfor
+                            </select>
+                        </div>
+
+                        <div class="flex space-x-2">
+                            <x-primary-button type="submit">
+                                {{ __('Aplicar Filtros') }}
+                            </x-primary-button>
+                            <a href="{{ route('tesis.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                                {{ __('Limpiar Filtros') }}
+                            </a>
+                        </div>
+                    </form>
+
+                    {{-- Botón de Registrar Nueva Tesis --}}
                     <div class="mb-4">
                         <a href="{{ route('tesis.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                             {{ __('Registrar Nueva Tesis') }}
                         </a>
                     </div>
 
+                    {{-- Tabla de Tesis --}}
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">

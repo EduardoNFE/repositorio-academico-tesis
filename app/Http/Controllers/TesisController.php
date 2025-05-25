@@ -11,8 +11,41 @@ class TesisController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Obtener todas las carreras para el filtro (si es necesario)
+        $carreras = Carrera::all();
+
+        // Iniciar la consulta de tesis
+        $query = Tesis::with('carrera');
+
+        // Aplicar filtro de búsqueda
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('titulo', 'like', '%' . $search . '%')
+                  ->orWhere('autor', 'like', '%' . $search . '%')
+                  ->orWhere('palabras_clave', 'like', '%' . $search . '%')
+                  ->orWhere('resumen', 'like', '%' . $search . '%');
+        }
+
+        // Aplicar filtro por carrera
+        if ($request->has('carrera_id') && $request->carrera_id != '') {
+            $query->where('carrera_id', $request->carrera_id);
+        }
+
+        // Aplicar filtro por año de publicación
+        if ($request->has('año_publicacion') && $request->año_publicacion != '') {
+            $query->where('año_publicacion', $request->año_publicacion);
+        }
+
+
+        // Obtener las tesis paginadas (opcional, pero buena práctica si hay muchas)
+        // Por ahora, solo las obtenemos todas o según el filtro
+        $tesis = $query->get();
+         // Retornar la vista 'tesis.index' y pasarle las tesis y las carreras
+        return view('tesis.index', compact('tesis', 'carreras'));
+        //-----------------------------------------------------------------
+
          // Obtener todas las tesis de la base de datos, con sus carreras relacionadas
         $tesis = Tesis::with('carrera')->get(); // 'carrera' es el nombre de la relación en el modelo Tesis
 
