@@ -138,7 +138,10 @@
                             </tbody>
                         </table>
                     </div>
-
+                     {{-- Añadir los enlaces de paginación aquí --}}
+                <div class="mt-4">
+                    {{ $tesis->links() }}
+                </div>
                 </div>
             </div>
         </div>

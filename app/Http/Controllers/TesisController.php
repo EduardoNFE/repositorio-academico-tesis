@@ -39,9 +39,8 @@ class TesisController extends Controller
         }
 
 
-        // Obtener las tesis paginadas (opcional, pero buena práctica si hay muchas)
-        // Por ahora, solo las obtenemos todas o según el filtro
-        $tesis = $query->get();
+         // Obtener las tesis paginadas (ej. 10 tesis por página)
+        $tesis = $query->paginate(10); // <-- CAMBIO AQUÍ: Usar paginate(10) en lugar de get()
          // Retornar la vista 'tesis.index' y pasarle las tesis y las carreras
         return view('tesis.index', compact('tesis', 'carreras'));
         //-----------------------------------------------------------------
