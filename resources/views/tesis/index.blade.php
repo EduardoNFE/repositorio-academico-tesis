@@ -109,7 +109,7 @@
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             @if ($tesi->archivo_pdf)
-                                                <a href="{{ Storage::url($tesi->archivo_pdf) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">Ver PDF</a>
+                                                <a href="{{ route('tesis.downloadPdf', $tesi->id_tesis) }}" class="text-indigo-600 hover:text-indigo-900">Descargar PDF</a>
                                             @else
                                                 No disponible
                                             @endif

@@ -210,4 +210,18 @@ class TesisController extends Controller
         // 4. Redireccionar al usuario con un mensaje de éxito
         return redirect()->route('tesis.index')->with('success', 'Tesis eliminada exitosamente.');
     }
+
+    public function downloadPdf($id)
+    {
+        $tesis = Tesis::findOrFail($id);
+
+        if (!Storage::disk('public')->exists($tesis->archivo_pdf)) {
+            abort(404, 'Archivo PDF no encontrado.');
+        }
+
+        $filePath = storage_path('app/public/' . $tesis->archivo_pdf);
+        $fileName = basename($tesis->archivo_pdf); // Obtiene solo el nombre del archivo
+
+        return response()->download($filePath, $fileName);
+    }
 }
