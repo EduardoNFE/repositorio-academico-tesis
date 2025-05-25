@@ -16,17 +16,20 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    {{-- Nuevo enlace para Tesis, visible solo para administradores --}}
-                    @auth
-                        @if(Auth::user()->role === 'admin')
-                            <x-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
-                                {{ __('Gestión de Tesis') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+                     {{-- ENLACE A TESIS: Ahora visible para CUALQUIER usuario autenticado --}}
+                    <x-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
+                        {{ __('Tesis') }}
+                    </x-nav-link>
+
+                    {{-- ENLACES PARA ADMINISTRADORES SOLAMENTE --}}
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('carreras.index')" :active="request()->routeIs('carreras.index')">
+                            {{ __('Carreras') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Usuarios') }}
-                            </x-nav-link>
-                        @endif
-                    @endauth
+                        </x-nav-link>
+                    @endif
                 </div>
             </div> {{-- Cierra el 'flex' de la navegación principal --}}
 
@@ -70,17 +73,20 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            {{-- Nuevo enlace responsivo para Tesis, visible solo para administradores --}}
-            @auth
-                @if(Auth::user()->role === 'admin')
-                    <x-responsive-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
-                        {{ __('Gestión de Tesis') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+            {{-- ENLACE A TESIS (Responsive): Ahora visible para CUALQUIER usuario autenticado --}}
+            <x-responsive-nav-link :href="route('tesis.index')" :active="request()->routeIs('tesis.index')">
+                {{ __('Tesis') }}
+            </x-responsive-nav-link>
+
+            {{-- ENLACES PARA ADMINISTRADORES SOLAMENTE (Responsive) --}}
+            @if (Auth::check() && Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('carreras.index')" :active="request()->routeIs('carreras.index')">
+                    {{ __('Carreras') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                     {{ __('Usuarios') }}
-                    </x-responsive-nav-link>
-                @endif
-            @endauth
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">

@@ -59,11 +59,15 @@
                     </form>
 
                     {{-- Botón de Registrar Nueva Tesis --}}
-                    <div class="mb-4">
-                        <a href="{{ route('tesis.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                            {{ __('Registrar Nueva Tesis') }}
-                        </a>
-                    </div>
+                    @if (Auth::check() && Auth::user()->role === 'admin') {{-- Condición para admin --}}
+                        <div class="mb-4">
+                            <a href="{{ route('tesis.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                {{ __('Registrar Nueva Tesis') }}
+                            </a>
+                        </div>
+                    @endif
+
+                    {{-- Mensaje de error (si hay algún problema) --}}
 
                     {{-- Tabla de Tesis --}}
                     <div class="overflow-x-auto">
@@ -115,6 +119,7 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        @if (Auth::check() && Auth::user()->role === 'admin') {{-- Condición para admin --}}
                                             <a href="{{ route('tesis.edit', $tesi->id_tesis) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">Editar</a>
                                             {{-- Formulario para Eliminar Tesis --}}
                                             <form action="{{ route('tesis.destroy', $tesi->id_tesis) }}" method="POST" class="inline-block" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta tesis?');">
@@ -124,7 +129,10 @@
                                                     Eliminar
                                                 </button>
                                             </form>
-                                        </td>
+                                        @else
+                                            No autorizado
+                                        @endif
+                                    </td>
                                     </tr>
                                 @endforeach
 
