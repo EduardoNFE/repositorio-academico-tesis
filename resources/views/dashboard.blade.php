@@ -21,23 +21,27 @@
                             <i class="fa-solid fa-book-open text-indigo-500 text-5xl opacity-50"></i>
                         </div>
 
-                        {{-- Tarjeta: Total de Carreras --}}
-                        <div class="bg-green-100 p-6 rounded-lg shadow-md flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-700">Total de Carreras</h3>
-                                <p class="text-4xl font-bold text-green-700">{{ $totalCarreras }}</p>
+                        {{-- Tarjeta: Total de Carreras (Solo para Admin) --}}
+                        @if (Auth::check() && Auth::user()->role === 'admin')
+                            <div class="bg-green-100 p-6 rounded-lg shadow-md flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-700">Total de Carreras</h3>
+                                    <p class="text-4xl font-bold text-green-700">{{ $totalCarreras }}</p>
+                                </div>
+                                <i class="fa-solid fa-graduation-cap text-green-500 text-5xl opacity-50"></i>
                             </div>
-                            <i class="fa-solid fa-graduation-cap text-green-500 text-5xl opacity-50"></i>
-                        </div>
+                        @endif
 
-                        {{-- Tarjeta: Total de Usuarios --}}
-                        <div class="bg-purple-100 p-6 rounded-lg shadow-md flex items-center justify-between">
-                            <div>
-                                <h3 class="text-lg font-semibold text-gray-700">Total de Usuarios</h3>
-                                <p class="text-4xl font-bold text-purple-700">{{ $totalUsuarios }}</p>
+                        {{-- Tarjeta: Total de Usuarios (Solo para Admin) --}}
+                        @if (Auth::check() && Auth::user()->role === 'admin')
+                            <div class="bg-purple-100 p-6 rounded-lg shadow-md flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-700">Total de Usuarios</h3>
+                                    <p class="text-4xl font-bold text-purple-700">{{ $totalUsuarios }}</p>
+                                </div>
+                                <i class="fa-solid fa-users text-purple-500 text-5xl opacity-50"></i>
                             </div>
-                            <i class="fa-solid fa-users text-purple-500 text-5xl opacity-50"></i>
-                        </div>
+                        @endif
                     </div>
 
                     {{-- Tesis Recientes --}}
