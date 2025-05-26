@@ -14,6 +14,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'laravel-bg-dark': '#1D2D5B', // Un azul oscuro para el fondo principal
+                'laravel-blue-button': '#4F46E5', // El azul brillante para los botones
+            },
         },
     },
 
