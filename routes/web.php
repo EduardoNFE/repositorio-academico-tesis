@@ -5,15 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TesisController; // <-- ¡Añade esta línea!
 use App\Http\Controllers\CarreraController; // Asegúrate de que este use esté presente si tienes CarreraController
 use App\Http\Controllers\UserController; // <-- ¡Añade esta línea!
+use App\Http\Controllers\DashboardController; // <-- ¡Añade esta línea!
+
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index']) // <-- CAMBIO AQUÍ
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
